@@ -15,5 +15,5 @@ Author: [@gdelacc](gdelacc.es)
 
 ### Get Started:
 ```[BASH]
-#bash: git clone
+#bash: ua.sh
 ```
