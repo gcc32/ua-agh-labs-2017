@@ -1,33 +1,100 @@
 #!/bin/bash
 
-echo "Welcome to IP Tools for UNIX ADMINISTRATION course at AGH!"
-echo "Please, select an option to do:\n"
-echo
+PROGRAM_TITLE="IP Tools for UNIX ADMINISTRATION course at AGH"
+
+
+# Function to get my current IP adress
+function public_ip {
+    clear
+    curl -s 'https://ipinfo.io' 
+    echo $TITLE
+}
+
+function check_domain {
+    echo "Enter the domain or ip and press enter..."
+    read SERVER
+    nslookup SERVER
+}
+
+function about {
+    RIGHT_NOW=$(date +"%x %r %Z")
+    TIME_STAMP="Updated on $RIGHT_NOW by $USER"
+
+    echo "System:" $HOSTNAME
+    echo "Date:" $RIGHT_NOW
+    echo $TIME_STAMP
+    echo ""
+    echo $PROGRAM_TITLE
+    echo "Version: v1.0"
+}
 
 # Main Menu:
 function main_menu {
-	options=("Check your current local IP adress" "Check your public IP adress" "Get information about DNS adress (nslookup)" "Quit")
+    clear
+
+    echo "Welcome to "$PROGRAM_TITLE
+    echo "Please, select an option to continue:"
+    echo ""
+
+    options=(
+             "Check your current local IP address"
+             "Check your public IP address"
+             "Get information about any domain (nslookup) A record" 
+             "About" 
+             "Exit"
+             )
+
+    function exit_message {
+        echo ""
+        echo -e "\033[33;33mPress any key to continue..."
+        echo "Press "${#options[@]}" to EXIT..."
+        echo -e "\033[33;37m"
+    }
+
+	
 select opt in "${options[@]}"
 do
     case $opt in
-        "Check your current local IP adress")
-            echo "you chose choice 1"
+        "Check your current local IP address")
             clear
+            echo
             ifconfig
+            exit_message
             ;;
-        "Option 2")
-            echo "you chose choice 2"
+
+        "Check your public IP address")
+            clear
+            echo
+            public_ip
+            exit_message
             ;;
-        "Option 3")
-            echo "you chose choice 3"
+
+        "Get information about any domain (nslookup) A record")
+            clear
+            echo
+            check_domain
+            exit_message
             ;;
-        "Quit")
+
+        "About")
+            clear
+            about
+            exit_message
+            ;;
+
+        "Exit")
+            clear
 			echo "bye!"
             break
             ;;
-        *) echo invalid option;;
+        *) echo Invalid option, please try again...;;
     esac
 done
 }
 
+
+
+
+###############################################################################
+##################################################### MAIN PROGRAM ############
 main_menu
